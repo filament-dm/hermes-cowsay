@@ -1,0 +1,36 @@
+[project]
+name = "hermes-cowsay"
+version = "0.1.0"
+description = "Hermes plugin exposing a cowsay tool"
+requires-python = ">=3.9"
+license = "MIT"
+# cowsay is a hard dependency: pip installs it alongside this plugin, so the
+# module can import it at the top level. This is the prescribed way for a
+# third-party Hermes plugin to depend on a PyPI package — declare it here and
+# install via pip, rather than self-installing at runtime.
+dependencies = [
+    "cowsay>=6,<7",
+]
+
+# Auto-discovered by Hermes: any installed package exposing this entry-point
+# group is scanned as a plugin (source: entrypoint).
+[project.entry-points."hermes_agent.plugins"]
+cowsay = "hermes_cowsay"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["hermes_cowsay"]
+
+[tool.ruff.lint]
+select = [
+    "E", "W",     # pycodestyle
+    "F",          # pyflakes
+    "I",          # isort
+    "B",          # flake8-bugbear
+    "UP",         # pyupgrade
+    "SIM",        # flake8-simplify
+    "RUF",        # ruff-specific
+]
